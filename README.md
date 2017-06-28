@@ -1,0 +1,2 @@
+# Smartphone-Digital-Phenotyping
+Working with JP Onnela and Patrick Staples on this project to analyze daily health behaviors through smartphone data. This can help to better understand and predict worsening conditions among patients with mental illness, like schizophrenia and depression. It has been found that this understanding can predict and prevent hospitalizations a few days before it occurs.
