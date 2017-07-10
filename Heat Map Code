@@ -4,7 +4,7 @@ Created on Mon Jul  3 17:04:02 2017
 
 @author: Silvio
 """
-
+import os
 os.getcwd()
 os.chdir("C:/Users/Silvio/Documents/Python")
 import glob
@@ -17,7 +17,6 @@ import os
 import re
 import datetime
 import pandas as pd
-
 #Silvio's Time and Variance
 #TASK:
 #create a function that takes each list of files and converts to newly named time dictionary
@@ -49,6 +48,8 @@ for unique_hour in unique_hours:
 silvio_times=times
 tsilvio_times=silvio_times
 
+
+rey_times
 silvio_times[hour][3]
 silvio_times[3]
 []
@@ -324,7 +325,12 @@ list(pat_times.keys())[0]
 #while the first key, which indicate the hours, for Silvio and Pat is greater than 
 #Rey's , who has the latest start time, remove the first key
 #must create a list from dictionary bc dictionaries have no order 
-#PROBLEM: Doesn't remove NA's! because doesn't detect them in list
+#PROBLEM: Doesn't remove NA's! because doesn't detect them in 
+from collections import deque
+
+pat_times    = {time: pat_times[time]    for time in pat_times    if time >= min(rey_times)}
+silvio_times = {time: silvio_times[time] for time in silvio_times if time >= min(rey_times)}
+
 while list(pat_times.keys())[0] and list(silvio_times.keys())[0] < list(rey_times.keys())[0]:
     pat_times.pop(list(pat_times.keys())[0],None)
     silvio_times.pop(list(silvio_times.keys())[0],None)
@@ -334,6 +340,21 @@ while list(pat_times.keys())[0] and list(silvio_times.keys())[0] < list(rey_time
     for hour in pat_times:
         if pat_times[hour][3] is np.NaN:
             pat_times.pop(hour)
+
+
+l=deque([1,2,3,4])
+l.popleft()
+
+min(silvio_times)
+
+while l[2]<10:
+    
+
+
+
+
+p=deque(list(pat_times.keys()))
+p.poplef
 
 silvio_times.pop(4179)   
 tsilvio_times.pop(4192)
@@ -394,7 +415,8 @@ for i in range(n):
         )
     )
         
-
+5/8
+pat
 plt.xlim(0,24)
 plt.ylim(0,max(day)+1)
 fig.savefig('Data Example Patrick', bbox_inches='tight')
@@ -409,6 +431,69 @@ danielle_data=lpf_var+[1,1,1,1,1]
 rey_data=lpf_var+[1,1,1,0,0]
 type(danielle_data)
 #maybe use this method for what I already figured out??
+
+hour = [i%24 for i in all_keys]#rows
+day = [i//24 for i in all_keys]#columns
+
+silvio_times.keys()
+
+all_keys=set(silvio_times).union(rey_times).union(pat_times)
+
+fig = plt.figure()
+ax = fig.add_subplot(111, aspect='equal')
+#for i in all_keys:
+def polygon(unique_hour, given_week, r, g, b, rb, gb, bb):
+
+
+
+fig = plt.figure()
+ax = fig.add_subplot(111, aspect='equal')
+
+given_week=24
+def plot_week(given_week):
+    fig = plt.figure()
+    ax = fig.add_subplot(111, aspect='equal')
+    for key in all_keys:
+        if key in rey_times:
+            r = int(rey_times[key][3] > 0.15)
+            rb = 1
+        else:
+            r = 1
+            rb = 0
+        if key in pat_times:
+            g = int(pat_times[key][3] > 0.15)
+            gb = 1
+        else:
+            g = 1
+            gb = 0
+        if key in silvio_times:
+            b = int(silvio_times[key][3] > 0.03)
+            bb = 1
+        else:
+            b = 1
+            bb = 0
+        week = unique_hour // (7*24)
+        day  = unique_hour // 24 - week * 7
+        hour = unique_hour - (week * 7 + day) * 24
+        if week == given_week:
+            ax.add_patch(
+                patches.Rectangle((hour,day), # (x,y)
+                    1,                 # width
+                    1,                 # height
+                    edgecolor = rgb(rb, gb, bb),
+                    facecolor=rgb(r, g, b)
+                )
+            )
+        polygon(key, given_week, r, g, b, rb, gb, bb)
+    plt.xlim(0,24)
+    plt.ylim(0,7)
+        #plt.savefig("Heat Map, Repeated Data.pdf")
+polygon(key, given_week, .5,.5,.5,.5,.5,.5)
+for given_week in range(24,35):
+    print(given_week)
+    plot_week(given_week)
+    
+plot_week(25)
 
 hour = [i%24 for i in range(n)]#rows
 day = [i//24 for i in range(n)]#columns
