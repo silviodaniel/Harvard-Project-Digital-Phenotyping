@@ -311,6 +311,74 @@ for i in lpf_var:#for i in low pass filter of variance
             check.append("J")
 p_lpf_var=lpf_var        
 
+#HEAT MAP
+def polygon(unique_hour, given_week, r, g, b, rb, gb, bb):
+    week = unique_hour // (7*24)
+    day  = unique_hour // 24 - week * 7
+    hour = unique_hour - (week * 7 + day) * 24
+    if week == given_week:
+                    ax.add_patch(
+                    patches.Rectangle((hour,day), # (x,y)
+                    1,                 # width
+                    1,                 # height
+                    edgecolor = rgb(rb, gb, bb),
+                    facecolor=rgb(r, g, b)
+                    )
+                )
+    
+fig = plt.figure()
+ax = fig.add_subplot(111, aspect='equal')
+#given_week=24 #yellow and blue borders, indicating my missing data on week 24?
+silvio_times
+
+def plot_week(given_week):
+    given_week=25
+    fig = plt.figure()
+    ax = fig.add_subplot(111, aspect='equal')
+    for key in all_keys:
+        if key in rey_times:
+            r = int(rey_times[key][3] > 0.15)
+            rb = 1
+        else:
+            r = 1
+            rb = 0
+        if key in pat_times:
+            g = int(pat_times[key][3] > 0.15)
+            gb = 1
+        else:
+            g = 1
+            gb = 0
+        if key in silvio_times:
+            b = int(silvio_times[key][3] > 0.03)
+            bb = 1
+        else:
+            b = 1
+            bb = 0
+        week = unique_hour // (7*24)
+        day  = unique_hour // 24 - week * 7
+        hour = unique_hour - (week * 7 + day) * 24
+        if week == given_week:
+            ax.add_patch(
+                patches.Rectangle((hour,day), # (x,y)
+                    1,                 # width
+                    1,                 # height
+                    edgecolor = rgb(rb, gb, bb),
+                    facecolor=rgb(r, g, b)
+                )
+            )
+        polygon(key, given_week, r, g, b, rb, gb, bb)
+    plt.xlim(0,24)
+    plt.ylim(0,7)
+    plt.savefig("Heat Map Week 25.pdf")
+        #plt.savefig("Heat Map, Repeated Data.pdf")
+polygon(key, given_week, .5,.5,.5,.5,.5,.5)
+for given_week in range(24,27):
+    print(given_week)
+    plot_week(given_week)
+    
+plot_week(24)
+pat_times.values()
+
 #low pass filter plots
 length = list(range(0,len(s_lpf_var)))#
 plt.plot(length,s_lpf_var,"ko",linewidth=2,markersize=1);
@@ -426,74 +494,8 @@ fig.savefig('Data Example Patrick', bbox_inches='tight')
 n = 168 # total number of hours of data available
 #these are 3 data sets with just the last 5 values different because I don't have
 #danielle's and rey's data, so I just duplicated it
-silvio_data=lpf_var + [0,0,0,0,0]
-danielle_data=lpf_var+[1,1,1,1,1]
-rey_data=lpf_var+[1,1,1,0,0]
-type(danielle_data)
-#maybe use this method for what I already figured out??
-
-hour = [i%24 for i in all_keys]#rows
-day = [i//24 for i in all_keys]#columns
-
-silvio_times.keys()
-
-all_keys=set(silvio_times).union(rey_times).union(pat_times)
-
-fig = plt.figure()
-ax = fig.add_subplot(111, aspect='equal')
 #for i in all_keys:
-def polygon(unique_hour, given_week, r, g, b, rb, gb, bb):
 
-
-
-fig = plt.figure()
-ax = fig.add_subplot(111, aspect='equal')
-
-given_week=24
-def plot_week(given_week):
-    fig = plt.figure()
-    ax = fig.add_subplot(111, aspect='equal')
-    for key in all_keys:
-        if key in rey_times:
-            r = int(rey_times[key][3] > 0.15)
-            rb = 1
-        else:
-            r = 1
-            rb = 0
-        if key in pat_times:
-            g = int(pat_times[key][3] > 0.15)
-            gb = 1
-        else:
-            g = 1
-            gb = 0
-        if key in silvio_times:
-            b = int(silvio_times[key][3] > 0.03)
-            bb = 1
-        else:
-            b = 1
-            bb = 0
-        week = unique_hour // (7*24)
-        day  = unique_hour // 24 - week * 7
-        hour = unique_hour - (week * 7 + day) * 24
-        if week == given_week:
-            ax.add_patch(
-                patches.Rectangle((hour,day), # (x,y)
-                    1,                 # width
-                    1,                 # height
-                    edgecolor = rgb(rb, gb, bb),
-                    facecolor=rgb(r, g, b)
-                )
-            )
-        polygon(key, given_week, r, g, b, rb, gb, bb)
-    plt.xlim(0,24)
-    plt.ylim(0,7)
-        #plt.savefig("Heat Map, Repeated Data.pdf")
-polygon(key, given_week, .5,.5,.5,.5,.5,.5)
-for given_week in range(24,35):
-    print(given_week)
-    plot_week(given_week)
-    
-plot_week(25)
 
 hour = [i%24 for i in range(n)]#rows
 day = [i//24 for i in range(n)]#columns
