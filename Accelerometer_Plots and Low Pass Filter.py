@@ -31,6 +31,8 @@ for file in silvio_list_of_files:
     elif var>=.003:
         var=1
     dvariance.append(var)
+    
+plt.plot(dvariance)
   
 #Discretized Variance for Rey's Data
 len(rey_dvariance)
@@ -55,7 +57,7 @@ for file in rey_list_of_files:
     rey_dvariance.append(var)    #This will return values of t for the tick marks, looping over 24 hours
     count+=1
 
-
+plt.
 #start on June 20th,3PM
 #must code to put in null values for in between
 
@@ -152,11 +154,20 @@ for i in rey_t:
         rey_t.append(mod(i+1,24))
     else:
         exit
-  
-      
+     
 #Plot of Phone Accelerometer Variance Discretized to 1's and 0's, no filter applied
 #SILVIO
+sl=list(silvio_times.values())
+
+dictlist=[]
+temp=[]
+for key,value in silvio_times.items():
+    temp=[key,value]
+    dictlist.append(temp)
+
+plt.plot(dvariance)
 length = list(range(0,len(silvio_times)))#
+#plt.plot()
 plt.plot(length,silvio_times[],"ko",linewidth=2,markersize=1);
 plt.title("Variance of Silvio's Phone Accelerometer",fontsize=15)
 plt.xlabel('Time (Hours) Since Day 1',fontsize=12)

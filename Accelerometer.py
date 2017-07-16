@@ -15,6 +15,64 @@ Created on Mon Jun 26 14:25:09 2017
 
 #files: os.file
 #np.std; np.mean ; np.sum by hour
+#CREATE A WIKI THROUGH GITHUB !
+
+#variance is  0.0099534974238807503
+
+#creat for looop that goes through 3AM-12AM and gets xyz values and means for each of them
+import glob
+import pandas as pd
+list_of_files=glob.glob('C:/Users/Silvio/Documents/Python/v3dw1iq/accelerometer/*.csv')
+c=0
+#Loop through all files to get the summary statistic for each
+
+#VARIANCE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+variance=[]
+for file in list_of_files:
+    columns=['time stamp','UTC time','accuracy','x','y','z']
+    df=pd.read_csv(file,header=0,sep=',',names=columns)
+    df.drop(df.columns[[0,1,2]],axis=1,inplace=True)
+    x=df['x'].values
+    y=df['y'].values
+    z=df['z'].values
+    #c+=1
+    #avg=np.mean(df.mean(axis=0))
+    var=sum(df.var(axis=0))
+    #sumofsq=sum(x**2)+sum(y**2)+sum(z**2)
+    variance.append(var)
+    #mean.append(avg)
+    #ssq.append(sumofsq)
+#Scatter plot of variance with actual values of variance:
+def mod(a,b):
+    return a%b    
+silvio_t=[3]
+for i in silvio_t:
+    if len(silvio_t)<len(dvariance):
+        silvio_t.append(mod(i+1,24))
+    else:
+        exit
+len(silvio_t) 
+    
+plt.plot(variance,"ko",linewidth=2,markersize=4);
+plt.title('Variance of Phone Accelerometer',fontsize=15)
+plt.xlabel('Time (Hours)',fontsize=12)
+plt.ylabel('Variance',fontsize=12)
+length = list(range(0,len(dvariance)))#
+plt.xticks(length[::10],silvio_t[::10])
+plt.savefig("Silvio's Raw Variance.pdf")
+
+plt.plot(mean,"ko",linewidth=2,markersize=4);
+plt.title('Mean')
+plt.savefig("Mean.pdf")
+plt.plot(ssq,"ko",linewidth=2,markersize=4);
+plt.title('Sum of Squares')
+plt.savefig("Sum of Squares.pdf")
+c
+df.head()
+plt.hist(variance,bins=100)
+help(plt.hist)
+
+##################################_________________-
 os.getcwd()
 import pandas as pd
 columns=['time stamp','UTC time','accuracy','x','y','z']
@@ -37,64 +95,8 @@ np.mean(df.mean(axis=1))
 
 variance=np.var(x)+np.var(y)+np.var(z)
 sum(df.var(axis=1))
-#variance is  0.0099534974238807503
-
-#creat for looop that goes through 3AM-12AM and gets xyz values and means for each of them
-import glob
-list_of_files=glob.glob('C:/Users/Silvio/Documents/Python/v3dw1iq/accelerometer/*.csv')
-c=0
-
-#Loop through all files to get the summary statistic for each
-mean=[]
-ssq=[]
-variance=[]
-for file in list_of_files:
-    columns=['time stamp','UTC time','accuracy','x','y','z']
-    df=pd.read_csv(file,header=0,sep=',',names=columns)
-    df.drop(df.columns[[0,1,2]],axis=1,inplace=True)
-    x=df['x'].values
-    y=df['y'].values
-    z=df['z'].values
-    c+=1
-    avg=np.mean(df.mean(axis=0))
-    var=sum(df.var(axis=0))
-    sumofsq=sum(x**2)+sum(y**2)+sum(z**2)
-    variance.append(var)
-    mean.append(avg)
-    ssq.append(sumofsq)
-
-variance  
-plt.plot(mean,"ko",linewidth=2,markersize=4);
-plt.title('Mean')
-plt.savefig("Mean.pdf")
-plt.plot(variance,"ko",linewidth=2,markersize=4,label="Variance");
-plt.title('Variance')
-plt.savefig("Variance.pdf")
-plt.plot(ssq,"ko",linewidth=2,markersize=4);
-plt.title('Sum of Squares')
-plt.savefig("Sum of Squares.pdf")
-c
-df.head()
-
-#Next task: trying to extract survey data on sleep and store into data frame for all days
-import pandas as pd
-columns=['question id','question type','question text','question answer options','answer']
-survey=pd.read_csv('C:/Users/Silvio/Documents/Python/v3dw1iq/survey_answers/Morning/2017-06-21 15_43_46.csv',header=0,sep=',',names=columns)
-survey.drop(survey.columns[[0,1,2,3]],axis=1,inplace=True)
-#ans=sleep['answer'].values
-#answers=[ans[1], ans[2]]#will create a list, but how do we want to store them?
-type(survey)
-survey.drop(survey.index[[0,3,4,5,6,7,8,9,10,11]])
-sleep=survey
-sleep
-ans
-#not finished
 
 
-columns=['Questions','Answers']
-df_ = pd.DataFrame(columns=columns)
-df=pd.DataFrame(sleep,columns=columns)
-pd.DataFrame.add()
 
 #
 
