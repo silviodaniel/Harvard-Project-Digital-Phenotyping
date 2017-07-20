@@ -11,6 +11,7 @@ Created on Wed Jun 28 09:55:34 2017
 
 @author: Silvio
 """
+############START HERE#######################
 #Sleep Time from survey
 import re
 import numpy as np
@@ -39,9 +40,7 @@ for file in silvio_list_of_files:#loop through to add sleep times of each day to
 sleep=sleep.drop(sleep.index[[0,1]])#removing the repeated file that was read in the loop#number of files
 sleep.index=sleep.index-1
 sleep= sleep[pd.notnull(sleep['Sleep Times'])]#removes NaN's
-sleep.loc[17,'Sleep Times']="12 am" #manually removing strings, putting value in
-sleep.loc[18,'Sleep Times']="12 am"
-sleep.loc[26,'Sleep Times']="3:30 am"
+
 sleep=sleep['Sleep Times'].tolist()#converts dic to list
 #date_str=miltime('on Jun 03, 02010 at 10:22PM')#can put this into miltime function, with further
 #modifications
@@ -72,58 +71,12 @@ def time_string_to_decimals(time_string):
     final= float(hours) + (float(minutes) / 60.0) + (float(seconds) / pow(60.0, 2))
     dec_time.append(final)
 time_string_to_decimals("1:12")
-#==============================================================================
-# 
-#==============================================================================
+
 #WIll convert time to decimals for the data frame, but need to convert to military time first
 dec_time=[]
 for time in range(len(mtime)):
     time_string_to_decimals(mtime[time])
-#==============================================================================
-# 
-#==============================================================================
-#fill in sleep time ranges with hours
-#Rounds .5 up! and rounds to nearest number! #rounding
-range(dec_time[0],dec_time[1])
-for sleep_time in range(len(dec_time)):
-    print(int(round(dec_time[sleep_time])))
 
-#get row from data frame in pandas
-#sleep['Sleep Times'].iloc[[0]]
-#==============================================================================
-# 
-#==============================================================================
-#TASK: get unique hour from that day: check wake up time, and if e.g. it's 8AM check that dates
-#unique hour for 8AM, and check sleep time (which could be that day or day before so need if statement)
-#if sleep is PM or <=23 but >=10 then change date to day before and find unique hour
-#if sleep is 11:30PM, get unique hour, then get range and if that range is 4250-4258 then change
-#last column to zero's
-for h in range(len(mtime)):
-    if dec_time[h]<12:
-        print(mtime)
-#==============================================================================
-# Getting the exact unique hour from inputted time and date
-#Military time
-#==============================================================================
-mtime=[]
-def miltime(date_str):
-    date_str
-    date=dparser.parse(date_str)
-    #print(date)
-    # 2010-06-03 22:22:00
-    date=(date.strftime('%H:%M'))
-    print(date)
-    mtime.append(date)
-
-miltime("1:30 pm")
-date=datetime.datetime.strptime("2017-07-07"+" " +"1:30", "%Y-%m-%d %H:%M")
-week = date.isocalendar()[1]
-day = date.weekday()
-hour = date.hour
-unique_hour = (week * 7 + day) * 24 + hour
-survey_times
-#==============================================================================
-# 
 #==============================================================================
 #made copies below to run code 
 copy_silvio_files_survey=glob.glob('C:/Users/Silvio/Documents/Python/v3dw1iq/survey_answers/Morning Copies/*.csv')
@@ -167,8 +120,7 @@ for h in range(len(mtime)):
         unique_hour = (week * 7 + day) * 24 + hour
         unique_hour_survey.append(unique_hour)
      
-#should output 4703 if h=38
-#should output 4249 if h=0; 
+
 #==============================================================================
 #     
 #==============================================================================
@@ -202,21 +154,11 @@ for hour in range(len(unique_hour_survey)):
 
 #puts all in one list
 unique_survey_new = [item for sublist in unique_survey_new for item in sublist]
-#unique_survey_new.index(4440)
-unique_survey_new.remove(4440)#removing hour when no sleep
+#unique_survey_new.remove(4440)#removing hour when no sleep
 
 for i in survey_times.keys():
     if i in unique_survey_new:
         survey_times[i]=(survey_times[i][0],survey_times[i][1],survey_times[i][2],0)
-
-#IDEA: to align the times with the days, we have all data from each day stored as military time integers
-#and each day is in the dictionary. So, check for each unique day and week if the military time
-#falls within that value of times then change to zero
-#CODE: start at 4263, week 25, day 2, check all hours 
-#for i in survey_times.keys():
-    #if j,k in survey_times.values()=(j,k):
-        #then check if l has number in range
-            #if true, then change last variance column to 0
 
 #==============================================================================
 #     FIN________________________
